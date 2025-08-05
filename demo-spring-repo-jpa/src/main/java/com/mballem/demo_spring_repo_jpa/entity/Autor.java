@@ -1,8 +1,10 @@
 package com.mballem.demo_spring_repo_jpa.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -23,6 +25,10 @@ public class Autor implements Serializable {
     @OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
     @JoinColumn(name = "id_info")
     private InfoAutor infoAutor;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "autor")
+    private List<Post> posts;
 
     public InfoAutor getInfoAutor() {
         return infoAutor;
@@ -54,6 +60,14 @@ public class Autor implements Serializable {
 
     public void setSobrenome(String sobrenome) {
         this.sobrenome = sobrenome;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 
     @Override
